@@ -23,10 +23,11 @@ const s = StyleSheet.create({
     marginTop: 20,
   },
   inputContainer: {
-    marginLeft: 20,
+    marginLeft: 0,
   },
   inputLabel: {
     fontWeight: "bold",
+    marginTop:10
   },
   input: {
     height: 40,
@@ -47,7 +48,7 @@ export default class CreditCardInput extends Component {
     ...InjectedProps,
     labels: PropTypes.object,
     placeholders: PropTypes.object,
-
+    vertical:PropTypes.bool,
     labelStyle: Text.propTypes.style,
     inputStyle: Text.propTypes.style,
     inputContainerStyle: ViewPropTypes.style,
@@ -91,6 +92,7 @@ export default class CreditCardInput extends Component {
     invalidColor: "red",
     placeholderColor: "gray",
     allowScroll: false,
+    vertical:false,
     additionalInputsProps: {},
   };
 
@@ -144,7 +146,7 @@ export default class CreditCardInput extends Component {
       cardImageFront, cardImageBack, inputContainerStyle,
       values: { number, expiry, cvc, name, type }, focused,
       allowScroll, requiresName, requiresCVC, requiresPostalCode,
-      cardScale, cardFontFamily, cardBrandIcons,
+      cardScale, cardFontFamily, cardBrandIcons,vertical
     } = this.props;
 
     return (
@@ -161,11 +163,11 @@ export default class CreditCardInput extends Component {
           expiry={expiry}
           cvc={cvc} />
         <ScrollView ref="Form"
-          horizontal
+          horizontal={!vertical}
           keyboardShouldPersistTaps="always"
           scrollEnabled={allowScroll}
           showsHorizontalScrollIndicator={false}
-          style={s.form}>
+          style={[s.form,]}>
           <CCInput {...this._inputProps("number")}
             keyboardType="numeric"
             containerStyle={[s.inputContainer, inputContainerStyle, { width: CARD_NUMBER_INPUT_WIDTH }]} />
